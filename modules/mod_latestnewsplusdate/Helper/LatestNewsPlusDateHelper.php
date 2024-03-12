@@ -1,0 +1,244 @@
+<?php
+/**
+ * @package     Joomla.Site
+ * @subpackage  mod_latestnewsplusdate
+ *
+ * @copyright   Copyright (C) 2005 - 2019 Open Source Matters, Inc. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * 
+ * @subpackage	mod_latestnewsplusdate
+ * @author     	TemplatePlazza
+ * @link 		http://www.templateplazza.com
+ */
+
+defined('_JEXEC') or die;
+
+JLoader::register('ContentHelperRoute', JPATH_SITE . '/components/com_content/helpers/route.php');
+
+JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_content/models', 'ContentModel');
+
+use Joomla\Utilities\ArrayHelper;
+
+/**
+ * Helper for mod_articles_latest
+ *
+ * @since  1.6
+ */
+abstract class LatestNewsPlusDateHelper
+{
+	/**
+	 * Retrieve a list of article
+	 *
+	 * @param   \Joomla\Registry\Registry  &$params  module parameters
+	 *
+	 * @return  mixed
+	 *
+	 * @since   1.6
+	 */
+	public static function getList(&$params)
+	{
+		// Get the dbo
+		$db = JFactory::getDbo();
+
+		// Get an instance of the generic articles model
+		$model = JModelLegacy::getInstance('Articles', 'ContentModel', array('ignore_request' => true));
+
+		// Set application parameters in model
+		$app       = JFactory::getApplication();
+		$appParams = $app->getParams();
+		$model->setState('params', $appParams);
+
+		// Set the filters based on the module params
+		$model->setState('list.start', (int) $params->get('num_intro_skip', 0));
+		$model->setState('list.limit', (int) $params->get('count', 5));
+		$model->setState('filter.published', 1);
+
+		// This module does not use tags data
+		$model->setState('load_tags', false);
+
+		// Access filter
+		$access     = !JComponentHelper::getParams('com_content')->get('show_noauth');
+		$authorised = JAccess::getAuthorisedViewLevels(JFactory::getUser()->get('id'));
+		$model->setState('filter.access', $access);
+
+		// Category filter
+		$model->setState('filter.category_id', $params->get('catid', array()));
+
+		// User filter
+		$userId = JFactory::getUser()->get('id');
+
+		switch ($params->get('user_id'))
+		{
+			case 'by_me' :
+				$model->setState('filter.author_id', (int) $userId);
+				break;
+			case 'not_me' :
+				$model->setState('filter.author_id', $userId);
+				$model->setState('filter.author_id.include', false);
+				break;
+
+			case 'created_by' :
+				$model->setState('filter.author_id', $params->get('author', array()));
+				break;
+
+			case '0' :
+				break;
+
+			default:
+				$model->setState('filter.author_id', (int) $params->get('user_id'));
+				break;
+		}
+
+		// Filter by language
+		$model->setState('filter.language', $app->getLanguageFilter());
+
+		// Featured switch
+		$featured = $params->get('show_featured', '');
+
+		if ($featured === '')
+		{
+			$model->setState('filter.featured', 'show');
+		}
+		elseif ($featured)
+		{
+			$model->setState('filter.featured', 'only');
+		}
+		else
+		{
+			$model->setState('filter.featured', 'hide');
+		}
+
+		// Set ordering
+		$order_map = array(
+			'm_dsc' => 'a.modified DESC, a.created',
+			'mc_dsc' => 'CASE WHEN (a.modified = ' . $db->quote($db->getNullDate()) . ') THEN a.created ELSE a.modified END',
+			'c_dsc' => 'a.created',
+			'p_dsc' => 'a.publish_up',
+			'random' => $db->getQuery(true)->Rand(),
+		);
+
+		$ordering = ArrayHelper::getValue($order_map, $params->get('ordering'), 'a.publish_up');
+		$dir      = 'DESC';
+
+		$model->setState('list.ordering', $ordering);
+		$model->setState('list.direction', $dir);
+
+		$items = $model->getItems();
+
+		foreach ($items as &$item)
+		{
+			$item->slug    = $item->id . ':' . $item->alias;
+
+			/** @deprecated Catslug is deprecated, use catid instead. 4.0 */
+			$item->catslug = $item->catid . ':' . $item->category_alias;
+
+			if ($access || in_array($item->access, $authorised))
+			{
+				// We know that user has the privilege to view the article
+				$item->link = JRoute::_(ContentHelperRoute::getArticleRoute($item->slug, $item->catid, $item->language));
+			}
+			else
+			{
+				$item->link = JRoute::_('index.php?option=com_users&view=login');
+			}
+		}
+
+		return $items;
+	}
+	public static function getDate($show_date, $show_date_type, $created_date, $custom_date_format)
+	{
+		$date = new JDate($created_date);
+		if($show_date==1)
+		{
+			switch($show_date_type) {
+			case 1:
+				echo "<span class=\"lnd_introdate\">";
+				echo JHtml::_('date', $date, JText::_('l, d F Y H:i'));
+				echo "<br/></span>";
+				break;
+			case 2:
+				echo "<span class=\"lnd_introdate\">";
+				echo JHtml::_('date', $date, JText::_('d F Y'));
+				echo "<br/></span>";
+				break;
+			case 3:
+				echo "<span class=\"lnd_introdate\">";
+				echo JHtml::_('date', $date, JText::_('H:i'));
+				echo "<br/></span>";
+				break;
+			case 4:
+				echo "<span class=\"lnd_introdate\">";
+				echo JHtml::_('date', $date, JText::_('D, M jS Y'));
+				echo "<br/></span>";
+				break;
+			case 5:
+				echo "<span class=\"lnd_introdate\">";
+				echo JHtml::_('date', $date, JText::_('l, F jS Y H:i'));
+				echo "<br/></span>";
+				break;
+			case 6:
+				echo "<span class=\"lnd_introdate\">";
+				echo JHtml::_('date', $date, JText::_($custom_date_format));
+				echo "<br/></span>";
+				break;
+			default:
+				echo "<span class=\"lnd_introdate\">";
+				echo JHtml::_('date', $date, JText::_('l, d F Y'));
+				echo "<br/></span>";
+				break;
+			}
+		}
+	}	
+	public static function getThumbnail($item_id, $article_images, $thumb_folder, $show_default_thumb, $thumb_width,$thumb_height,$title,$introtext,$modulebase) {
+		$thumb_name = str_replace([':', '\\', '/', '*', '\'', '"'], '', str_replace(' ', '_', strtolower($item_id)) );
+		if (!JFile::exists(JPATH_ROOT.$thumb_folder.$thumb_name.'.jpg')) {
+			// Thumbnail is not exist
+			$images = json_decode($article_images);
+			// Find Article's Image
+			if (!empty($images->image_intro) ) { 
+				$orig_image = $images->image_intro;
+			} elseif (empty($images->image_intro) && !empty($images->image_fulltext) ) { 
+				$orig_image = $images->image_fulltext;
+			} else {
+				// Find first image in the article
+				$html = $introtext;
+				$html .= "alt='...' title='...' />";
+				$pattern = '/<img[^>]+src[\\s=\'"]';
+				$pattern .= '+([^"\'>\\s]+)/is';
+
+				if ( preg_match($pattern, $html, $match) ) {
+					$orig_image = $match[1];
+				} else {
+					$orig_image = "";
+				}
+			}
+			
+			// Replace %20 character for image's name with space
+			$orig_image = str_replace('%20', ' ', $orig_image);
+			
+			if(strpos($orig_image, 'http') !== false) {
+				$orig_image = "";
+			}
+
+			// If article contains an image then generate a thumbnail
+			if($orig_image != ""){
+				$image = new JImage($orig_image);
+				$resizedImage = $image->cropResize($thumb_width * 2, $thumb_height * 2, true);
+				$thumb = $resizedImage->toFile(JPATH_BASE.$thumb_folder.$thumb_name.'.jpg', IMAGETYPE_JPEG, array('quality' => 70));
+				$thumb_img = '<img src="'.JUri::root().$thumb_folder.$thumb_name.'.jpg" alt="'.$title.'" width="'.$thumb_width.'" height="'.$thumb_height.'"/>';	
+			} else {
+
+			// If article doesn't have any image then use default image or leave it empty
+				if($show_default_thumb){
+					$thumb_img = '<img src="'.JUri::root().'/modules/'.$modulebase.'/tmpl/assets/default.png" alt="'.$title.'" width="'.$thumb_width.'" height="'.$thumb_height.'" />';
+				} else {
+					$thumb_img="";
+				}
+			}
+		} else {
+			// Thumbnail is exists
+			$thumb_img = '<img src="'.JUri::root().$thumb_folder.$thumb_name.'.jpg" width="'.$thumb_width.'" height="'.$thumb_height.'" alt="'.$title.'" />';
+		}
+		return $thumb_img;
+	}
+}

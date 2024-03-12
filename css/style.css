@@ -1,0 +1,23 @@
+.bar{
+    width : auto;
+    height: 36px;
+    background: #8bcf3e ;
+}
+  /* visited link */
+  a:visited {
+    color: rgb(5, 5, 5);
+  }
+  
+  /* mouse over link */
+  a:hover {
+    color: #558121;
+  }
+  mark {
+    background-color: rgb(240, 227, 46);
+    color: black;
+  }
+  .footbar{
+    width : auto;
+    height: 36px;
+    background: #111111 ;
+}

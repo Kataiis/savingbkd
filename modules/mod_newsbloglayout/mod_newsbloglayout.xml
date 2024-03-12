@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<extension type="module" version="3.0" client="site" method="upgrade">
+	<name>News Blog Layout - Latest Articles</name>
+	<author>svtemplates.com</author>
+	<creationDate>December 2017</creationDate>
+	<copyright>Copyright (c) 2017 svtemplates.com All rights reserved.</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<authorEmail></authorEmail>
+	<authorUrl></authorUrl>
+	<version>1.2.0</version>
+	<description>
+	<![CDATA[
+	<div class="art-title" style="height: 50px; text-align: left;">
+	<p>
+    Responsive module to show latest articles in blog layout - Lite version.<br/>
+	For additional information visit <a href="https://svtemplates.com/" target="_blank">SVtemplates.com</a> or download <a href="https://svtemplates.com/index.php/joomla-extensions/551-free-joomla-module-news-blog-layout-latest-articles" target="_blank">Pro version</a>
+	</p>
+	</div>
+	]]>
+	</description>
+	
+	<files>
+		<filename module="mod_newsbloglayout">mod_newsbloglayout.php</filename>
+		<folder>tmpl</folder>
+		<folder>img</folder>
+		<filename>helper.php</filename>
+	</files>
+	
+<updateservers>
+    <server type="extension" name="News Blog Layout - Latest Articles" priority="2">https://svtemplates.com/updatefolder/update_mod_newsbloglayout.xml</server>
+</updateservers>		
+
+	
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field
+					name="catid"
+					type="category"
+					label="Category"
+					description="Selects Articles from one or more Categories. If no selection will show all categories as default."
+					extension="com_content"
+					multiple="true"
+					size="10"
+					default=""
+					>
+					<option value="">- All Categories -</option>
+				</field>
+
+     			<field name="count" type="text" default="4" label="Count" description="The number of Articles to display" />
+     			<field name="relative_date" type="text" default="360" label="Date range" description="Number of days since the article was published" />
+
+				<field
+					name="show_featured"
+					type="list"
+					label="Featured Articles"
+					description="Show or hide articles designated as featured."
+					default=""
+					>
+					<option value="">Show</option>
+					<option value="0">Hide</option>
+					<option value="1">Only show Featured Articles</option>
+				</field>
+
+				<field
+					name="ordering"
+					type="list"
+					label="Order"
+					description="Recently Added First: order the articles using their creation date&lt;br /&gt;Recently Modified First: order the articles using their modification date&lt;br /&gt;Recently Published First: order the articles using their publication date.&lt;br /&gt;Recently Touched First: order the articles using their modification or creation dates."
+					default="published"
+					>
+					<option	value="h_dsc">Hits Articles</option>
+					<option value="c_dsc">Recently Added First</option>
+					<option value="m_dsc">Recently Modified First</option>
+					<option value="p_dsc">Recently Published First</option>
+					<option value="mc_dsc">Recently Touched First</option>
+					<option	value="random">Random Articles</option>
+				</field>
+
+				<field
+					name="user_id"
+					type="list"
+					label="Authors"
+					description="Filter by author."
+					default="0"
+					>
+					<option value="0">Anyone</option>
+					<option value="by_me">Added or modified by me</option>
+					<option value="not_me">Not added or modified by me</option>
+				</field>
+				
+			<field name="linkmoreaerticlestarget" type="list" default="_blank"  label="URL link target" description="">
+       			   <option value="_blank">Blank</option>
+                   <option value="_self">Self</option>
+			 </field>    
+	        <field name="modverticalnewsmobilelayout" type="text" default="768px" size="50" label="Switch to mobile layout if the screen resolution is less than" description="The module uses only one column"/>
+	        <field name="articlesimgheightmobile" type="text" default="" size="50" label="Mobile layout articles image height" description=""/>
+
+
+            <field type="spacer" name="spacer1" label="&lt;hr/&gt;Module layout" />
+			
+               <field name="layout" type="list" default="default"  label="First column items" description="">
+       			   <option value="default">1 items</option>                 
+              </field>
+			  
+			<field name="firstcolumnitemsheight" type="text" default="330px" label="Items height first column" description="Height of articles in first column" />
+            <field name="itemsarticleheight" type="text" default="100px" size="50" label="Items height second column" description="Height of articles in second column"/>
+			<field name="firstcolumnwidth" type="text" default="45%" label="First column width" description="" />
+			<field name="secondcolumnwidth" type="text" default="54%" label="Second column width" description="" />
+     
+	           <field name="firstcolumnposition" type="list" default="left"  label="First column position" description="">
+       			   <option value="left">Left</option>
+                   <option value="right">Right</option>
+              </field>    
+
+               <field name="secondcolumnposition" type="list" default="Right"  label="Second column position" description="">
+                   <option value="right">Right</option>
+       			   <option value="left">Left</option>
+              </field>    
+
+			<field name="itemarticlesmargintop" type="text" default="0px" label="Items margin top" description="" />
+			<field name="itemsarticlemarginbottom" type="text" default="15px" label="Items margin bottom" description="" />
+			<field name="itemsarticleboxshadow" type="text" default="0px 22px 20px -20px #000" label="Items box-shadow" description="Add none to remove box-shadow" />
+			<field name="itemarticlespaddingbottom" type="text" default="0px" label="Items padding bottom" description="" />
+			<field name="itemarticlespaddingtop" type="text" default="5px" label="Items padding top" description="" />
+			<field name="itemarticlespaddingleft" type="text" default="0px" label="Items padding left" description="" />
+			<field name="itemarticlespaddingright" type="text" default="0px" label="Items padding right" description="" />
+			<field name="modulebackground" type="color" default="transparent" label="Module background" description="Background color" />
+			<field name="itemsbackground" type="color" default="" label="Items background" description="Background color" />
+			<field name="itemsbackgroundhover" type="color" default="" label="Hover items background" description="Hover background color" />
+			<field name="itemsarticlehoverboxshadow" type="text" default="0px 22px 20px -20px #000" label="Items hover box-shadow" description="Add none to remove box-shadow" />
+			<field name="itemsbackgroundhovertransition" type="text" default="500" label="How many milliseconds the transition effect takes to complete" description="Enter 0 and the transition will have no effect" />
+	
+            <field type="spacer" name="spacer2" label="&lt;hr/&gt;Module title params" />			 
+
+			<field name="newsmoduletitleonof" type="radio" class="btn-group" default="1" label="Enable / Disable Module title" description="">
+                	<option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                 </field> 
+				 
+			<field name="newsmoduletitleposition" type="list" default="1"  label="Title module position" description="">
+       			   <option value="1">Position 1</option>
+                   <option value="2">Position 2</option>
+			 </field>    
+
+			<field name="linktitleurl" type="radio" class="btn-group" default="1" label="Enable / Disable link" description="">
+                	<option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                 </field> 
+				 
+			 <field name="ourteamtitle" type="text" default="" size="50" label="Text title" description="Add title"/>  
+			 <field name="modtitlelinkurl" type="text" default="#" size="50" label="Title link" description="Add URL"/>  
+			 
+               <field name="ourteamtitletextalign" type="list" default="center"  label="Title text-align" description="">
+       			   <option value="left">Left</option>
+                   <option value="right">Right</option>
+       			   <option value="center">Center</option>
+                   <option value="justify">Justify</option>
+              </field>    
+
+			 <field name="ourteamtitlecolor" type="color" default="" label="Title color" description="Title color" /> 
+			 <field name="ourteamtitlehovercolor" type="color" default="" label="Hover title color" description="Title color" /> 
+
+			<field name="ourteamtitletextdecoration" type="list" default="none"  label="Hover title text-decoration" description="Optional">                   
+                   <option value="none">No</option>
+				   <option value="underline">Underline</option>
+             </field>
+			 
+			 <field name="newsmoduletitlebackground" type="color" default="" label="Title background color" description="Title background" />  
+			 
+             <field name="ourteamtitlepadding" type="text" default="5px 5px 5px 5px" size="50" label="Title padding" description="Padding top / right / bottom / left"/> 
+			 
+             <field name="ourteamtitletextshadow" type="text" default="2.4px 2.4px 0px rgba(23, 23, 23, 0.81)" size="50" label="Title text-shadow" description="Enter ' none ' to remove text shadow"/> 
+             <field name="ourteamtitleletterspacing" type="text" default="0px" size="50" label="Title letter-spacing" description="CSS option"/> 
+			
+			<field name="ourteamtitlefontweight" type="list" default="normal"  label="Title font-weight" description="Optional">                   
+                   <option value="normal">Normal</option>
+                   <option value="bold">Bold</option>
+                   <option value="lighter">Lighter</option>
+           		   <option value="100">100</option> 
+				   <option value="200">200</option> 
+				   <option value="300">300</option> 
+				   <option value="400">400</option> 
+				   <option value="500">500</option> 
+				   <option value="600">600</option> 
+				   <option value="700">700</option> 
+				   <option value="800">800</option> 
+				   <option value="900">900</option>
+             </field>
+
+			 <field name="ourteamtitlefontsize" type="text" default="20px" size="50" label="Title font-size" description="CSS option"/>      
+			
+				<field name="googleFont"
+					type="radio"
+					class="btn-group btn-group-yesno"
+					default="1"
+					label="Google font for title"
+					description=""
+				>
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+			
+			<field name="ourteamtitlefontfamily" type="text" default="Open+Sans" label="Google Font Style" description="If you want to use this function you must leave the field CSS Font Style empty" />	
+			<field name="ourteamtitlefontfamilycss" type="text" default="" label="CSS Font Style" description="CSS font-family. If you want to use this function you must turn off Google font for title" />	
+
+            <field type="spacer" name="spacer3" label="&lt;hr/&gt;Articles title params" />		
+			
+			<field name="firscolumntitleposition" type="list" default="1"  label="First column articles titles position" description="Optional">                   
+                   <option value="1">Position 1</option>
+				   <option value="2">Position 2</option>
+             </field>
+			
+               <field name="firstcolumntitletextalign" type="list" default="left"  label="First column articles titles text-align" description="">
+       			   <option value="left">Left</option>
+                   <option value="right">Right</option>
+       			   <option value="center">Center</option>
+                   <option value="justify">Justify</option>
+              </field>    
+			
+			 <field name="googleFontarticletitle"
+					type="radio"
+					class="btn-group btn-group-yesno"
+					default="1"
+					label="Google font for title"
+					description=""
+				>
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+			
+			<field name="firstarticletitlefontfamily" type="text" default="Open+Sans" label="Google Font Style" description="If you want to use this function you must leave the field CSS Font Style empty" />
+			<field name="firstarticletitlecssfontfamily" type="text" default="" label="CSS Font Style" description="CSS font-family. If you want to use this function you must turn off Google font for title" />	
+			<field name="firstarticletitlefontsize" type="text" default="16px" label="Title font-size" description="" />
+			<field name="firstarticletitlelineheight" type="text" default="1" label="Title line-height" description="" />
+			<field name="firstarticletitleletterspacing" type="text" default="0px" label="Title letter-spacing" description="" />
+			<field name="firstarticletitletextalign" type="list" default="left"  label="Title text-align" description="Optional">                   
+                   <option value="left">Left</option>
+				   <option value="right">Right</option>
+				   <option value="center">Center</option>
+				   <option value="justify">Justify</option>
+             </field>
+			 
+			<field name="firstarticletitlemargin" type="text" default="5px 0 0 5px" label="Title margin" description="Margin top / right / bottom / left" />
+
+			<field name="firstarticletitlefontweight" type="list" default="normal"  label="Title font-weight" description="Optional">                   
+                   <option value="normal">Normal</option>
+				   <option value="bold">Bold</option>
+             </field>
+			 
+			<field name="firstarticletitletextdecoration" type="list" default="none"  label="Title text-decoration" description="Optional">                   
+                   <option value="none">No</option>
+				   <option value="underline">Underline</option>
+             </field>
+			<field name="firstarticletitlecolor" type="color" default="" label="Title color" description="" />
+			<field name="firstarticletitlehovercolor" type="color" default="" label="Title hover color" description="" />
+			<field name="hoveritemtitlecolor" type="color" default="" label="Hover item - title color" description="" />
+			<field name="hoverfirstarticletitletextdecoration" type="list" default="none"  label="Hover title text-decoration " description="Optional">                   
+                   <option value="none">No</option>
+				   <option value="underline">Underline</option>
+             </field>
+			 
+			<field name="firsrcolumnlimittexttitlearticle" type="text" default="50" label="Limit text title - First column" description="" />
+			<field name="limittexttitlearticle" type="text" default="50" label="Limit text title" description="" />
+			
+            <field type="spacer" name="spacer4" label="&lt;hr/&gt;Images params NB: For the images in the first column, you can only control the height" />
+			<field name="patchtoimage" type="list" default="2"  label="Use image" description="">
+       			   <option value="1">Intro Image</option>
+       			   <option value="2">Full Article Image</option>
+                   <option value="3">Article image</option>
+			 </field>    
+			 			
+			<field name="newsboximagefloat" type="list" default="left"  label="Image position" description="Optional">                   
+                   <option value="left">Left</option>
+				   <option value="right">Right</option>
+				   <option value="none">Top</option>
+             </field>
+
+			<field name="firstcolumnitemsimageheight" type="text" default="230px" label="Images height first column" description="Only for images from first column" />
+			<field name="articlesimgheight" type="text" default="100px" label="Image height" description="" />	
+			<field name="newsboximagewidth" type="text" default="100px" label="Image width" description="If you use image position top - add 100%" />	
+			<field name="newsboximagepadding" type="text" default="5px 5px 5px 5px" label="Image padding" description="Padding top / right / bottom / left" />	
+
+			<field name="newsboximageborderradius" type="list" default="0px"  label="Round image" description="Optional. This option works correctly if the width and height of the image are the same">                   
+                   <option value="0px">No</option>
+				   <option value="150px">Yes</option>
+             </field>
+			 
+            <field type="spacer" name="spacer5" label="&lt;hr/&gt;Author articles params" />
+			
+			<field name="firstarticleautoronof" type="radio" class="btn-group" default="1" label="Author article" description="">
+                	<option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                 </field> 
+
+			<field name="firstarticleautortext" type="text" default="Written by" label="Author text" description="" />
+
+			<field name="firstarticleautorcolor" type="color" default="" label="Author color" description="" />
+			<field name="firstarticleautorfontweight" type="list" default="normal"  label="Author font-weight" description="Optional">                   
+                   <option value="normal">Normal</option>
+				   <option value="bold">Bold</option>
+             </field>
+			 
+			<field name="firstarticleautormargin" type="text" default="5px 0 0 5px" label="Author margin" description="Margin top / right / bottom / left" />
+
+			<field name="firstarticleautorfontsize" type="text" default="13px" label="Author font-size" description="" />
+
+			<field name="firstarticleautortextalign" type="list" default="left"  label="Author text-align" description="Optional">                   
+                   <option value="left">Left</option>
+				   <option value="right">Right</option>
+				   <option value="center">Center</option>
+				   <option value="justify">Justify</option>
+             </field>
+			 
+            <field type="spacer" name="spacer6" label="&lt;hr/&gt;Article hits / Article date params" />
+			<field name="firstarticlehits" type="radio" class="btn-group" default="1" label="Article hits" description="">
+                	<option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                 </field> 
+
+			<field name="firstarticledateupdate" type="radio" class="btn-group" default="1" label="Article date" description="">
+                	<option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                 </field> 
+				 
+			<field name="artclehitsdateposition" type="list" default="1"  label="Article hits / Article date position" description="">
+       			   <option value="1">Position 1</option>
+                   <option value="2">Position 2</option>
+			 </field>    
+				 	 
+			<field name="firstarticlehitsupdatemargin" type="text" default="5px 0 0 5px" label="Article hits / Article date margin" description="Margin top / right / bottom / left" />
+
+			<field name="dateofarticle" type="list" default="modified"  label="Date of the article" description="Optional">                   
+                   <option value="modified">Modified Date</option>
+				   <option value="publish_up">Publishing Date</option>
+				   <option value="created">Created Date</option>
+             </field>
+
+			<field name="firstarticledateformatupdate" type="text" default="l jS \of F Y │ h:i:s A" label="Article date format" description="" />
+			
+			<field name="iconcontentdateupdate" type="list" default="none"  label="Icon date article" description="">
+       			   <option value="">No</option>
+                   <option value="url">Yes</option>
+			 </field>    
+			
+			<field name="iconarticlehits" type="list" default="none"  label="Icon hits" description="">
+       			   <option value="">No</option>
+                   <option value="url">Yes</option>
+			 </field>    
+			
+			<field name="firstarticlehitsupdatetexalign" type="list" default="left"  label="Article hits / Article date  text-align" description="Optional">                   
+                   <option value="left">Left</option>
+				   <option value="right">Right</option>
+				   <option value="center">Center</option>
+				   <option value="justify">Justify</option>
+             </field>
+			<field name="firstarticlehitsupdatecolor" type="color" default="" label="Article hits / Article date color" description="" />
+			<field name="firstarticlehitsupdatefontsize" type="text" default="12px" label="Article hits / Article date font-size" description="" />
+			<field name="firstarticledatecreatelineheight" type="text" default="1.5" label="Article hits / Article date line-height" description="" />
+			
+            <field type="spacer" name="spacer8" label="&lt;hr/&gt;Top module Image" />
+			<field name="imagesceneonof" type="radio" class="btn-group" default="0" label="Image with menu" description="">
+                	<option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                 </field> 
+			<field name="imagesceneimage" type="media" directory="images" label="Image" description="Add image" default=""/>
+			<field name="imagesceneimgheight" type="text" default="250px" label="Image height" description="" />
+			<field name="imagescenemenubackground" type="text" default="rgba(255, 0, 0, 0.8)" label="Menu background color" description="" />
+			<field name="imagescenemenucolor" type="color" default="" label="Menu items color" description="" />
+			<field name="imagescenemenuhovercolor" type="color" default="" label="Hover menu items color" description="" />
+			<field name="imagescenemenufontsize" type="text" default="15px" label="Menu items font-size" description="" />
+			<field name="imagescenemenufontfamily" type="text" default="Times, Times New Roman, Georgia, serif" label="Menu items font-family" description="" />
+			<field name="imagescenemenufontweight" type="list" default="normal"  label="Menu items font-weight" description="Optional">                   
+                   <option value="normal">Normal</option>
+				   <option value="bold">Bold</option>
+             </field>
+			<field name="imagescenemenuhovertextdecoration" type="list" default="none"  label="Hover menu items text-decoration" description="Optional">                   
+                   <option value="none">No</option>
+				   <option value="underline">Underline</option>
+             </field>
+			 
+			<field name="imagescenemenueffect" type="radio" class="btn-group" default="0" label="Menu effect - Style 1" description="">
+                	<option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                 </field> 
+				 
+			<field name="imagescenemenueffect2" type="radio" class="btn-group" default="0" label="Menu effect - Style 2" description="">
+                	<option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                 </field> 
+				 
+			<field name="imagescenemenueffect3" type="radio" class="btn-group" default="0" label="Menu effect - Style 3" description="">
+                	<option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                 </field> 
+				 
+			<field name="imagescenemenueffect4" type="radio" class="btn-group" default="0" label="Menu effect - Style 4" description="">
+                	<option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                 </field> 
+			 
+			<field name="imagescenemenutransitioneffect" type="text" default="600" label="How many milliseconds the transition effect takes to complete" description="" />
+
+			<field name="Title1" type="text" default="" label="Title item 1" description="" />
+			<field name="Link1" type="text" default="" label="Link Url item 1" description="Insert URL of the read more." />
+
+			<field name="Title2" type="text" default="" label="Title item 2" description="" />
+			<field name="Link2" type="text" default="" label="Link Url item 2" description="Insert URL of the read more." />
+			
+			<field name="Title3" type="text" default="" label="Title item 3" description="" />
+			<field name="Link3" type="text" default="" label="Link Url item 3" description="Insert URL of the read more." />
+			
+			<field name="Title4" type="text" default="" label="Title item 4" description="" />
+			<field name="Link4" type="text" default="" label="Link Url item 4" description="Insert URL of the read more." />
+			
+			<field name="Title5" type="text" default="" label="Title item 5" description="" />
+			<field name="Link5" type="text" default="" label="Link Url item 5" description="Insert URL of the read more." />
+
+			<field name="Title6" type="text" default="" label="Title item 6" description="" />
+			<field name="Link6" type="text" default="" label="Link Url item 6" description="Insert URL of the read more." />
+
+			<field name="Title7" type="text" default="" label="Title item 7" description="" />
+			<field name="Link7" type="text" default="" label="Link Url item 7" description="Insert URL of the read more." />
+
+			<field name="Title8" type="text" default="" label="Title item 8" description="" />
+			<field name="Link8" type="text" default="" label="Link Url item 8" description="Insert URL of the read more." />
+
+			<field name="Title9" type="text" default="" label="Title item 9" description="" />
+			<field name="Link9" type="text" default="" label="Link Url item 9" description="Insert URL of the read more." />
+			
+			<field name="Title10" type="text" default="" label="Title item 10" description="" />
+			<field name="Link10" type="text" default="" label="Link Url item 10" description="Insert URL of the read more." />
+			
+			<field name="Title11" type="text" default="" label="Title item 11" description="" />
+			<field name="Link11" type="text" default="" label="Link Url item 11" description="Insert URL of the read more." />
+			
+			<field name="Title12" type="text" default="" label="Title item 12" description="" />
+			<field name="Link12" type="text" default="" label="Link Url item 12" description="Insert URL of the read more." />
+			
+			<field name="Title13" type="text" default="" label="Title item 13" description="" />
+			<field name="Link13" type="text" default="" label="Link Url item 13" description="Insert URL of the read more." />
+
+			<field name="Title14" type="text" default="" label="Title item 14" description="" />
+			<field name="Link14" type="text" default="" label="Link Url item 14" description="Insert URL of the read more." />
+			
+			<field name="Title15" type="text" default="" label="Title item 15" description="" />
+			<field name="Link15" type="text" default="" label="Link Url item 15" description="Insert URL of the read more." />
+			
+			
+			<field type="spacer" name="spacer9" label="&lt;hr/&gt;Tags Articles" />
+			<field name="tagsleftarticles" type="radio" class="btn-group" default="0" label="Tags articles first column" description="">
+                	<option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                 </field> 
+			<field name="tagsrightarticles" type="radio" class="btn-group" default="0" label="Tags articles second column" description="">
+                	<option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                 </field> 
+			<field name="limitcounttags" type="text" default="5" label="Tags count" description="" />
+			<field name="tagsatribute" type="text" default="" label="Text before tags" description="For example: Tags: " />
+			<field name="ariclestagsspancolor" type="color" default="" label="Text color" description="" />
+			<field name="ariclestagsmargin" type="text" default="5px 0 0 5px" label="Tags margin" description="Margin top / right / bottom / left" />
+			<field name="ariclestagsposition" type="list" default="left"  label="Tags position" description="Optional">                   
+                   <option value="left">Left</option>
+				   <option value="right">Right</option>
+				   <option value="center">Center</option>
+             </field>
+			<field name="ariclestagscolor" type="color" default="" label="Tags color" description="" />
+			<field name="ariclestagscolorhover" type="color" default="" label="Tags hover color" description="" />
+			<field name="tagslinktarget" type="list" default="_self"  label="Tags link target" description="">
+       			   <option value="_blank">Blank</option>
+                   <option value="_self">Self</option>
+			 </field>    
+			<field name="ariclestagsfontsize" type="text" default="12px" label="Tags font-size" description="" />
+			
+			<field name="showtagsmobile" type="radio" class="btn-group" default="1" label="Tags articles in mobile layout" description="">
+                	<option value="1">JNO</option>
+                    <option value="0">JYES</option>
+                 </field> 
+
+			 
+			</fieldset>
+
+			<fieldset name="advanced">
+
+				<field
+					name="moduleclass_sfx"
+					type="text"
+					default="_menu"
+					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+					description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC"
+				/>
+
+				<field
+					name="cache"
+					type="list"
+					label="COM_MODULES_FIELD_CACHING_LABEL"
+					description="COM_MODULES_FIELD_CACHING_DESC"
+					default="1"
+					>
+					<option value="1">JGLOBAL_USE_GLOBAL</option>
+					<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+				</field>
+
+				<field
+					name="cache_time"
+					type="text"
+					label="COM_MODULES_FIELD_CACHE_TIME_LABEL"
+					description="COM_MODULES_FIELD_CACHE_TIME_DESC"
+					default="900"
+				/>
+
+				<field
+					name="cachemode"
+					type="hidden"
+					default="static"
+					>
+					<option value="static"></option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+</extension>
